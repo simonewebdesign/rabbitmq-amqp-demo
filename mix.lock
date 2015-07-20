@@ -1,3 +1,7 @@
 %{"amqp": {:hex, :amqp, "0.1.1"},
   "amqp_client": {:hex, :amqp_client, "3.5.0"},
-  "rabbit_common": {:hex, :rabbit_common, "3.5.0"}}
+  "connection": {:git, "git://github.com/fishcakez/connection.git", "581729581289de1ba7d9220aa7feacaf7ccef764", []},
+  "decimal": {:hex, :decimal, "1.1.0"},
+  "marco_polo": {:git, "git@github.com:MyMedsAndMe/marco_polo.git", "a53b6aaa8fcc709e32b9d6f0f51c08829c571272", []},
+  "rabbit_common": {:hex, :rabbit_common, "3.5.0"},
+  "small_ints": {:git, "git://github.com/whatyouhide/small_ints.git", "6e6c60a86d11fa176dfc857a8268af57bf409444", []}}
