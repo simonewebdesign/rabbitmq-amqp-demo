@@ -174,5 +174,47 @@ PROPERTIES
 -------------------------------+-------------+-------------------------------+-----------+----------+----------+-----------+-----------+----------+
 ```
 
-Now that we have a database and a class with its cluster in OrientDB, we can start storing reports in it.
+---
 
+Now that we have a database and a class with its cluster in OrientDB, we can start storing reports in it, using the marco_polo driver.
+
+```
+iex -S mix
+Erlang/OTP 17 [erts-6.4] [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Interactive Elixir (1.0.5) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)>     {:ok, conn} = MarcoPolo.start_link(
+...(1)>       connection: {:db, "mydatabase", "document"},
+...(1)>       user: "root",
+...(1)>       password: "0r13ntDB",
+...(1)>       host: "boot2dockerip",
+...(1)>       port: 2424
+...(1)>     )
+{:ok, #PID<0.146.0>}
+iex(2)> record = %MarcoPolo.Document{class: "Report", fields: %{"origin_id" => 123, "reference" => "abc", "version" => 1}}
+%MarcoPolo.Document{class: "Report",
+ fields: %{"origin_id" => 123, "reference" => "abc", "version" => 1}, rid: nil,
+ version: nil}
+iex(3)> MarcoPolo.create_record(conn, 11, record)
+{:ok, {%MarcoPolo.RID{cluster_id: 11, position: 1}, 1}}
+```
+
+If you kept the OrientDB console open, you should now be able to get the Report:
+
+```
+orientdb {db=mydatabase}> select from Report
+
+----+-----+------+---------+---------+-------
+#   |@RID |@CLASS|origin_id|reference|version
+----+-----+------+---------+---------+-------
+0   |#11:0|Report|123      |abc      |1
+----+-----+------+---------+---------+-------
+
+1 item(s) found. Query executed in 0.002 sec(s).
+```
+
+You can also get it using `MarcoPolo`:
+
+``` elixir
+{:ok, [report]} = MarcoPolo.command(conn, "select from Report")
+```
