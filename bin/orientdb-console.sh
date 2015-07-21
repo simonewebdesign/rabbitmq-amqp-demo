@@ -1,2 +1,2 @@
 #!/bin/sh
-docker exec -it orientdb bash
+docker exec -it orient bash
