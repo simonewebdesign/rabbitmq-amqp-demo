@@ -11,7 +11,7 @@ defmodule Consumer do
   @queue_error "#{@queue}_error"
 
   def init(_opts) do
-    {:ok, conn} = Connection.open("amqp://guest:guest@boot2dockerip:8080")
+    {:ok, conn} = Connection.open("amqp://guest:guest@boot2dockerip:5672")
     {:ok, chan} = Channel.open(conn)
     # Limit unacknowledged messages to 10
     Basic.qos(chan, prefetch_count: 10)
